@@ -1,7 +1,7 @@
 from mesa.visualization.ModularVisualization import ModularServer
 from mesa.visualization.modules import CanvasGrid, ChartModule
 from mesa.visualization.UserParam import UserSettableParameter
-from cooperation.agents import Cow, GrassPatch
+from cooperation.agents import Cow, GrassPatch, FCMCow
 from cooperation.model import Cooperate
 
 """
@@ -27,7 +27,7 @@ def coop_portrayal(agent):
     portrayal = {}
 
     # update portrayal characteristics for each Cow
-    if type(agent) is Cow:
+    if type(agent) is Cow or type(agent) is FCMCow:
         portrayal["Shape"] = "circle"
         portrayal["r"] = .5
         portrayal["Layer"] = 0
@@ -55,18 +55,22 @@ def coop_portrayal(agent):
 
 
 # dictionary of user settable parameters - these map to the model __init__ parameters
-model_params = {"init_cows": UserSettableParameter("slider", "cows", 25, 1, 200,
+model_params = {
+    "use_fcm": UserSettableParameter('checkbox', 'Use FCM', False),
+    "init_cows": UserSettableParameter("slider", "cows", 25, 1, 200,
                                                     description="Cows..."),
                 "stride_length": UserSettableParameter("slider", "Stride Length", 10, 1, 20,
                                                    description="Length of stride..."),
                 "cooperative_probabilty": UserSettableParameter("slider", "Cooperative Propability", 50, 1, 100,
                                                     description="Prob.."),
                 "metabolism": UserSettableParameter("slider", "metabolism", 50, 1, 100,
-                                                    description="M.."),
-                "reproduction_cost": UserSettableParameter("slider", "Reproduction Cost", 50, 1, 100,
-                                                    description="rc.."),
-                "reproduction_threshold": UserSettableParameter("slider", "Reproduction Threshold", 50, 1, 100,
-                                                    description="rt..")
+                                                    description="How much energy is used when walking"),
+                "reproduction_cost": UserSettableParameter("slider", "Reproduction Cost", 10, 1, 100,
+                                                    description="How much energy it takes to reproduce"),
+                "reproduction_threshold": UserSettableParameter("slider", "Reproduction Threshold", 80, 1, 100,
+                                                    description="Threshold to reproduce"),
+                "grass_energy": UserSettableParameter("slider", "Grass Energy", 50, 1, 100,
+                                                    description="Energy gained from eating")
 
                 }
 
