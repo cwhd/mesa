@@ -1,7 +1,7 @@
 from mesa.visualization.ModularVisualization import ModularServer
 from mesa.visualization.modules import CanvasGrid, ChartModule
 from mesa.visualization.UserParam import UserSettableParameter
-from cooperation.agents import Cow, GrassPatch, FCMCow
+from cooperation.agents import Cow, GrassPatch
 from cooperation.model import Cooperate
 
 """
@@ -27,7 +27,7 @@ def coop_portrayal(agent):
     portrayal = {}
 
     # update portrayal characteristics for each Cow
-    if type(agent) is Cow or type(agent) is FCMCow:
+    if type(agent) is Cow:
         portrayal["Shape"] = "circle"
         portrayal["r"] = .5
         portrayal["Layer"] = 0
@@ -56,7 +56,6 @@ def coop_portrayal(agent):
 
 # dictionary of user settable parameters - these map to the model __init__ parameters
 model_params = {
-    "use_fcm": UserSettableParameter('checkbox', 'Use FCM', False),
     "init_cows": UserSettableParameter("slider", "cows", 25, 1, 200,
                                                     description="Cows..."),
                 "stride_length": UserSettableParameter("slider", "Stride Length", 10, 1, 20,
