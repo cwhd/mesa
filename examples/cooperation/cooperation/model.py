@@ -33,11 +33,6 @@ class Cooperate(Model):
 
     def run_fcm(self, is_greedy, concepts):
         fcmService = FCMAgent()
-        #fcm_input1 = { 'name':'Food Observation', 'act':'TANH', 'output':1 }
-        #fcm_input2 = { 'name':'Energy', 'act':'TANH', 'output':1 }
-        #fcm_input3 = { 'name':'Eat', 'act':'TANH', 'output':1 }
-        #body_input = [fcm_input1, fcm_input2, fcm_input3]
-        #concepts = { 'concepts':body_input }
         if is_greedy:
             fcm_result = fcmService.getFCM('greedyCow1', concepts)
         else:
@@ -94,18 +89,17 @@ class Cooperate(Model):
 
             if self.use_fcm:
                 #params for coop cow
-                fcm_input1 = { 'name':'Food Observation', 'act':'SIGMOID', 'output':0.54 }
+                fcm_input1 = { 'name':'Food Observation', 'act':'SIGMOID', 'output':0.41 }
                 fcm_input2 = { 'name':'Energy', 'act':'SIGMOID', 'output':0.75 }
-                fcm_input3 = { 'name':'Eat', 'act':'SIGMOID', 'output':0.73 }
+                fcm_input3 = { 'name':'Eat', 'act':'SIGMOID', 'output':0.76 }
                 body_input = [fcm_input1, fcm_input2, fcm_input3]
                 concepts = { 'concepts':body_input }
                 if(is_greedy):
-                    fcm_input1 = { 'name':'Food Observation', 'act':'SIGMOID', 'output':0.41 }
-                    fcm_input2 = { 'name':'Energy', 'act':'TvANH', 'output':0.75 }
-                    fcm_input3 = { 'name':'Eat', 'act':'SIGMOID', 'output':0.76 }
-                    body_input = [fcm_input1, fcm_input2, fcm_input3]
+                    fcm_input1 = { 'name':'Food Observation', 'act':'INTERVAL', 'output':1, 'fixedOutput': True }
+                    fcm_input2 = { 'name':'Eat', 'act':'INTERVAL', 'output':1, 'fixedOutput': True }
+                    fcm_input3 = { 'name':'Energy', 'act':'INTERVAL', 'output':1, 'fixedOutput': True }
+                    body_input = [fcm_input1, fcm_input2]
                     concepts = { 'concepts':body_input }
-
                 fcm_result = self.run_fcm(is_greedy, concepts)
 
                 print("Model FCM: ")
